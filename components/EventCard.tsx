@@ -5,22 +5,45 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import React from "react";
 
-export default function EventCard() {
+interface Event {
+  imageUrl: string;
+  eventName: string;
+  location: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  startPrice: number;
+}
+
+export default function EventCard({
+  imageUrl,
+  eventName,
+  location,
+  date,
+  startTime,
+  endTime,
+  startPrice,
+}: Event) {
   return (
-    <Card>
+    <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia
           component='img'
-          height='140'
-          image='https://images.unsplash.com/photo-1674574124345-02c525664b65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
+          height='200px'
+          image={imageUrl}
           alt='green iguana'
         />
         <CardContent>
-          <Typography fontWeight={600}>Event Name</Typography>
+          <Typography fontWeight={600}>{eventName}</Typography>
           <Typography variant='body2' color='text.secondary'>
-            Lizards
+            {location}
+          </Typography>
+          <Typography variant='body2' color='text.secondary'>
+            {date}, {startTime}- {endTime}
+          </Typography>
+          <Typography variant='body2' color='text.secondary'>
+            R{startPrice}
           </Typography>
         </CardContent>
       </CardActionArea>

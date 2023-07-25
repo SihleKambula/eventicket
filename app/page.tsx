@@ -1,15 +1,19 @@
 "use client";
-import { useEffect } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import {
+  QueryDocumentSnapshot,
+  collection,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "../firebase/config";
-import { Container, Card, Typography, Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import EventCard from "@/components/EventCard";
+
 export default function Home() {
+  const [events, setEvents] = useState<QueryDocumentSnapshot[]>([]);
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "events"), (snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        console.log(doc.data());
-      });
+      setEvents(snapshot.docs);
     });
     return () => unsub();
   }, []);
@@ -17,23 +21,36 @@ export default function Home() {
   return (
     <main>
       <Container sx={{ marginTop: "20px" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={3}>
-            <EventCard />
+        {events.length ? (
+          <Grid container spacing={2}>
+            {events.map((event) => {
+              const {
+                eventName,
+                date,
+                eventLocation,
+                imageUrl,
+                endTime,
+                startPrice,
+                startTime,
+              } = event.data();
+              return (
+                <Grid key={eventName} item xs={12} sm={6} md={4}>
+                  <EventCard
+                    eventName={eventName}
+                    imageUrl={imageUrl}
+                    location={eventLocation}
+                    date={date}
+                    startTime={startTime}
+                    endTime={endTime}
+                    startPrice={startPrice}
+                  />
+                </Grid>
+              );
+            })}
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <EventCard />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <EventCard />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <EventCard />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <EventCard />
-          </Grid>
-        </Grid>
+        ) : (
+          <p>Loading</p>
+        )}
       </Container>
     </main>
   );
