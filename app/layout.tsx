@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body>
+      <body style={{ backgroundColor: "#F5F5F5" }}>
         <ThemeRegistry options={{ key: "mui" }}>
           <Navbar />
           {children}

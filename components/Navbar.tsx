@@ -7,26 +7,27 @@ import {
   Box,
   Avatar,
 } from "@mui/material";
+import Link from "next/link";
 export default function Navbar() {
   return (
     <nav>
       <AppBar position='sticky' color='transparent' elevation={2}>
         <Container>
           <Toolbar sx={{ justifyContent: "space-between" }}>
-            <Typography
-              variant='h6'
-              component='a'
-              href='/'
-              color='primary'
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontWeight: 800,
-                textDecoration: "none",
-              }}
-            >
-              Eventicket
-            </Typography>
+            <Link href='/' style={{ textDecoration: "none" }}>
+              <Typography
+                variant='h6'
+                color='primary'
+                sx={{
+                  mr: 2,
+                  display: { xs: "none", md: "flex" },
+                  fontWeight: 800,
+                  textDecoration: "none",
+                }}
+              >
+                Eventicket
+              </Typography>
+            </Link>
 
             <Box>
               <Avatar

@@ -43,6 +43,7 @@ export default function Home() {
                     startTime={startTime}
                     endTime={endTime}
                     startPrice={startPrice}
+                    id={event.id}
                   />
                 </Grid>
               );
