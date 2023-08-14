@@ -17,15 +17,20 @@ import { DocumentData } from "firebase/firestore";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useCart } from "../store/store";
 
-export default function PriceCard(props: { ticket: DocumentData }) {
-  //local storage
+export default function PriceCard(props: { ticket: DocumentData; event: any }) {
+  //store
+  const { addItemToCart } = useCart((state) => state);
+
+  //local state
   const [quantityValue, setQuantityValue] = useState(0);
 
   //props
   const { name, data, show, funs } = props.ticket;
+  const { date, eventName, eventLocation, startTime } = props.event;
 
-  //utils
+  //convert number into array
   const quantity = createArrayFromNumber(data.quantity);
 
   //functions
@@ -37,10 +42,16 @@ export default function PriceCard(props: { ticket: DocumentData }) {
     toast(`${quantityValue} ${data.ticketType} tickets added to cart`, {
       position: toast.POSITION.TOP_RIGHT,
     });
-    console.log({
+
+    addItemToCart({
       ticketType: data.ticketType,
       price: data.price,
       quantity: quantityValue,
+      totalQuantity: data.quantity,
+      date,
+      eventName,
+      eventLocation,
+      startTime,
     });
 
     setQuantityValue(0);
@@ -60,7 +71,7 @@ export default function PriceCard(props: { ticket: DocumentData }) {
           disabled={quantity.length == 0 ? true : false}
           expanded={show}
           onChange={() => {
-            //only expand selected card
+            //toggle between price cards
             if (name == "Early bird") {
               funs.early(!show);
               funs.gen(false);

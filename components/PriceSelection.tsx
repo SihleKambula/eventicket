@@ -45,7 +45,9 @@ export default function PriceSelection(event: { event: DocumentData }) {
   return (
     <>
       {eventTickets.map((ticket) => {
-        return <PriceCard key={ticket.name} ticket={ticket} />;
+        return (
+          <PriceCard key={ticket.name} ticket={ticket} event={event.event} />
+        );
       })}
     </>
   );
