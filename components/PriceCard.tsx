@@ -28,7 +28,7 @@ export default function PriceCard(props: { ticket: DocumentData; event: any }) {
 
   //props
   const { name, data, show, funs } = props.ticket;
-  const { date, eventName, eventLocation, startTime } = props.event;
+  const { date, eventName, eventLocation, startTime, imageUrl } = props.event;
 
   //convert number into array
   const quantity = createArrayFromNumber(data.quantity);
@@ -52,6 +52,7 @@ export default function PriceCard(props: { ticket: DocumentData; event: any }) {
       eventName,
       eventLocation,
       startTime,
+      imageUrl,
     });
 
     setQuantityValue(0);

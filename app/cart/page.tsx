@@ -3,8 +3,31 @@ import { CartCard } from "@/components";
 import { Stack, Button, Container, Box } from "@mui/material";
 import Link from "next/link";
 import { useCart } from "../../store/store";
+import LoginForm from "@/components/LoginForm";
+import { useState } from "react";
+import SignUpForm from "@/components/SignUpForm";
 export default function Page() {
   const { items } = useCart((state) => state);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [signUpOpen, setSignOpen] = useState(false);
+
+  const handleLoginOpen = () => {
+    setLoginOpen(true);
+    setSignOpen(false);
+  };
+
+  const handleLoginClose = () => {
+    setLoginOpen(false);
+  };
+
+  const handleSignUpOpen = () => {
+    setSignOpen(true);
+    setLoginOpen(false);
+  };
+
+  const handleSignUpClose = () => {
+    setSignOpen(false);
+  };
 
   return (
     <>
@@ -26,10 +49,22 @@ export default function Page() {
               </Button>
             </Link>
 
-            <Button variant='contained'>Checkout</Button>
+            <Link href={"/payment"}>
+              <Button variant='contained'>Checkout</Button>
+            </Link>
           </Stack>
         </Box>
       </Container>
+      <LoginForm
+        open={loginOpen}
+        onClose={handleLoginClose}
+        showSignUp={handleSignUpOpen}
+      />
+      <SignUpForm
+        open={signUpOpen}
+        onClose={handleSignUpClose}
+        showLogin={handleLoginOpen}
+      />
     </>
   );
 }
