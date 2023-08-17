@@ -1,11 +1,20 @@
 "use client";
 import PaymentCard from "@/components/PaymentCard";
 import { useCart } from "@/store/store";
-import { Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React from "react";
 
 export default function Page() {
   const { items } = useCart((state) => state);
+  let total: number = 0;
 
   return (
     <>
@@ -20,6 +29,36 @@ export default function Page() {
             );
           })}
         </Grid>
+        <Stack
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
+          marginTop='20px'
+        >
+          <Box>
+            <Typography>
+              {items.forEach((item: any) => {
+                total = total + item.price * item.quantity;
+              })}
+              Total Cost: R{total}
+            </Typography>
+          </Box>
+          <Stack
+            direction='row'
+            justifyContent='flex-end'
+            alignItems='center'
+            spacing={3}
+          >
+            <Link href='/'>
+              <Button variant='outlined' sx={{ background: "#fff" }}>
+                Bank card
+              </Button>
+            </Link>
+            <Link href={"/payment"}>
+              <Button variant='contained'>EFT</Button>
+            </Link>
+          </Stack>
+        </Stack>
       </Container>
     </>
   );
